@@ -1,20 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login
-from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 from rootapp.forms import RegistrationForm
 from rootapp.models import EventRegistration, Event
 
 from random import randint
-
-def start(request):
-    user = request.user
-    if user.is_authenticated:
-        user_registrations = EventRegistration.objects.filter(user=user)
-
-        return render(request, 'users/start.html',
-                        {'registrations': user_registrations})
-    else:
-        return render(request, 'users/start.html')
 
 def register(request):
     if request.method == 'GET':
@@ -30,13 +22,24 @@ def register(request):
             login(request, user)
             return redirect(reverse('start'))
 
-def events(request):
-    if not request.user.is_authenticated:
-        return redirect('start')
-    events = Event.objects.all()
-    return render(request, 'users/events.html',
-                  {'events': events})
 
+def start(request):
+    user = request.user
+    if user.is_authenticated:
+        user_registrations = EventRegistration.objects.filter(user=user)
+
+        return render(request, 'users/start.html',
+                        {'registrations': user_registrations})
+    else:
+        return render(request, 'users/start.html')
+
+
+@login_required
+def events(request):
+    events = Event.objects.all()
+    return render(request, 'users/events.html', {'events': events})
+
+@login_required
 def register_for_event(request):
     if request.method == 'POST':
         event = Event.objects.get(pk=request.POST['pk'])
@@ -47,11 +50,18 @@ def register_for_event(request):
                 event=event, user=user).count() != 0
 
         if not already_registered:
-            event.add_atendee(user=user, code=randint(111111, 999999))
+            # TODO: move the assignment of the unregistration code to models (?)
+            #       ensure uniqueness of the code for the user
+            unregister_code = randint(111111, 999999)
+            event.add_atendee(user=user, code=unregister_code)
+            messages.success(request,
+                             f'Your unregistration code for {event.title} \
+                             is {unregister_code}',
+                             extra_tags='unregister-code')
 
-    return redirect('start')
+    return events(request)
 
-
+# TODO: move this logic to models, perhaps
 def get_message_from_code(code: str, user):
     if not (code.isdigit() and len(code) == 6):
         return 'Your code should be a six digit number'
@@ -77,13 +87,19 @@ def get_message_from_code(code: str, user):
         return 'You cannot cancel your reservation\
                 later than two days before the start of an event.'
 
+    event.remove_atendee(user, code)
 
 
-
+# TODO: refactor with django.contrib.messages
+@login_required
 def unregister_from_event(request):
-    if request.method != 'POST': redirect('start')
+    if request.method != 'POST': return redirect('start')
 
-    message = get_message_from_code(request.POST['code'], request.user)
-
-    return render(request, 'users/event_unregister.html',
-                  {'message': message})
+    error_message = get_message_from_code(request.POST['code'], request.user)
+    if error_message != None:
+        messages.error(request, error_message, extra_tags='unregister')
+    else:
+        messages.success(request,
+                         'You have been succesfully unregistered.',
+                         extra_tags='unregister')
+    return start(request)

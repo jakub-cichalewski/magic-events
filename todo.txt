@@ -1,0 +1,3 @@
+TODO: use django's messages
+TODO: serialize and add api
+FIXME: thumbanails - change media location, add css

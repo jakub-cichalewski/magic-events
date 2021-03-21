@@ -2,33 +2,42 @@
 
 
 {% block content %}
-  You are logged in as {{ user.username }}!
-  <br>
-  <h3>You can register for following events:</h3>
-  <div>
-    <table>
-     <tr>
-       <th>Title</th>
-       <th>Starts</th>
-       <th>Ends</th>
-       <th></th>
-     </tr>
-       {% for event in events %}
-         <tr>
-           <td>{{ event.title }}</td>
-           <td>{{ event.start_date }}</td>
-           <td>{{ event.end_date }}</td>
-           <td>
-             <form method="post" action="/events/register/">
-               {% csrf_token %}
-             <button name="pk" type="submit" value="{{ event.pk }}">Register</button>
-             </form>
-           </td>
-         </tr>
-       {% endfor %}
-    </table>
 
+You are logged in as {{ user.username }}! <br>
 
-  </div>
+<h3>You can register for following events:</h3>
+
+<div>
+  {% if messages %}
+    {% for message in messages %}
+    <span class="unregister-code">{{ message }}</span>
+    {% endfor %}
+  {% endif %}
+  <table>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Starts</th>
+      <th>Ends</th>
+      <th></th>
+    </tr>
+    {% for event in events %}
+    <tr>
+      <td><img class="event-thumbnail" src="{{ event.thumbnail.url }}"></td>
+      <td>{{ event.title }}</td>
+      <td>{{ event.start_date }}</td>
+      <td>{{ event.end_date }}</td>
+      <td>
+        <form method="post" action="/events/register/">
+          {% csrf_token %}
+          <button name="pk" type="submit" value="{{ event.pk }}">Register</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<h5><a href="/">Go back...</a></h5>
 
 {% endblock %}

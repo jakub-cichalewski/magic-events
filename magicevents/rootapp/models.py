@@ -27,9 +27,16 @@ class Event(models.Model):
                                          user=user,
                                          registration_code=code)
 
+    def remove_atendee(self, user, code):
+        registration = EventRegistration.objects.get(user=user,
+                                                    event=self,
+                                                    registration_code=code)
+        registration.delete()
+
+
     def get_days_to_start(self):
         today = datetime.date.today()
-        diff_days = (start_date - today).days
+        diff_days = (self.start_date - today).days
         return diff_days if diff_days >= 0 else -1
 
     def get_duration(self):
@@ -50,8 +57,3 @@ class EventRegistration(models.Model):
                                 default=randint(111111, 999999))
     def __str__(self):
         return f'User {self.user.username} registered for {self.event.title}'
-
-    def remove_user(self, user):
-        registration = EventRegistration.object.get(user=user,
-                                                    event=self.event)
-        registration.delete()

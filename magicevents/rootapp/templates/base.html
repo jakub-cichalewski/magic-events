@@ -1,33 +1,8 @@
-<style>
-body {
-  margin: 1em auto;
-  max-width: 50em;
-  padding: 0.6em;
-  font-size: 1.2em;
-  font-family: baskerville, palatino, georgia, serif;
-}
-h {
-  line-height: 1.3;
-}
-img {
-  max-width: 15em;
-  margin: 0 auto 0 auto;
-}
-table {
-  width:100%;
-}
-.unregister{
-  font-size: 0.9em;
-  color: #444444
-}
-@media print {
-body {
-  max-width: none;
-  }
-}
-</style>
-<h1>Welcome to Magic Events</h1>
+{% load static %}
 
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<h1>Welcome to Magic Events</h1>
 
 {% block content %}
 {% endblock %}
