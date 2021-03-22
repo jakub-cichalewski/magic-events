@@ -61,7 +61,7 @@ def event_register(request):
 
     return events(request)
 
-# TODO: move this logic to models, perhaps
+# TODO: move some of this logic to model (?), some to form validation
 def get_message_from_code(code: str, user):
     if not (code.isdigit() and len(code) == 6):
         return 'Your code should be a six digit number'
