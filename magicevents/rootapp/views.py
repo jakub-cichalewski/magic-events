@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 
-from rootapp.forms import RegistrationForm
-from rootapp.models import EventRegistration, Event
+
+from .forms import RegistrationForm, EventUnregisterForm
+from .models import EventRegistration, Event
 
 from random import randint
+
 
 def register(request):
     if request.method == 'GET':
@@ -22,17 +24,14 @@ def register(request):
             login(request, user)
             return redirect(reverse('start'))
 
-
 def start(request):
     user = request.user
-    if user.is_authenticated:
-        user_registrations = EventRegistration.objects.filter(user=user)
 
-        return render(request, 'users/start.html',
-                        {'registrations': user_registrations})
-    else:
-        return render(request, 'users/start.html')
+    event_registrations = EventRegistration.objects.filter(user=user) \
+        if user.is_authenticated else None
 
+    return render(request, 'users/start.html',
+                    {'registrations': event_registrations})
 
 @login_required
 def events(request):
@@ -40,24 +39,25 @@ def events(request):
     return render(request, 'users/events.html', {'events': events})
 
 @login_required
-def register_for_event(request):
-    if request.method == 'POST':
-        event = Event.objects.get(pk=request.POST['pk'])
-        user = request.user
+def event_register(request):
+    if request.method != 'POST': return redirect('start')
 
-        already_registered = \
-            EventRegistration.objects.filter(
-                event=event, user=user).count() != 0
+    event = Event.objects.get(pk=request.POST['pk'])
+    user = request.user
 
-        if not already_registered:
-            # TODO: move the assignment of the unregistration code to models (?)
-            #       ensure uniqueness of the code for the user
-            unregister_code = randint(111111, 999999)
-            event.add_atendee(user=user, code=unregister_code)
-            messages.success(request,
-                             f'Your unregistration code for {event.title} \
-                             is {unregister_code}',
-                             extra_tags='unregister-code')
+    already_registered = \
+        EventRegistration.objects.filter(
+            event=event, user=user).count() != 0
+
+    if not already_registered:
+        # TODO: move the assignment of the unregistration code to models (?)
+        #       ensure uniqueness of the code for the user
+        unregister_code = randint(111111, 999999)
+        event.add_atendee(user=user, code=unregister_code)
+        messages.success(request,
+                         f'Your unregistration code for {event.title} \
+                         is {unregister_code}',
+                         extra_tags='unregister-code')
 
     return events(request)
 
@@ -92,7 +92,7 @@ def get_message_from_code(code: str, user):
 
 # TODO: refactor with django.contrib.messages
 @login_required
-def unregister_from_event(request):
+def event_unregister(request):
     if request.method != 'POST': return redirect('start')
 
     error_message = get_message_from_code(request.POST['code'], request.user)
