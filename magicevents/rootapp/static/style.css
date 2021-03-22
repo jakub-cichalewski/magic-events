@@ -1,9 +1,11 @@
 body {
-  margin: 1em auto;
+  margin: 1em auto 1em;
   max-width: 50em;
   padding: 0.6em;
   font-size: 1.2em;
   font-family: baskerville, palatino, georgia, serif;
+  border-left: 1px solid;
+  border-right: 1px solid;
 }
 
 h {
@@ -11,8 +13,30 @@ h {
 }
 a {
   text-decoration: none;
-  color: blue;
+  color: #205;
 }
+h1.logo {
+  background-color: #205;
+  border-radius: 0.2em;
+
+  text-align: center;
+  color: #F4FAFF;
+  padding: 3px;
+}
+
+
+.greeting {
+  height: 2em;
+  border-bottom: 1px solid #220055;
+}
+.login-options {
+  float: right;
+  margin-right: 0.5em;
+}
+.login-options:first-child {
+  margin-right: 0;
+}
+
 
 table {
   width: 100%;
@@ -32,13 +56,13 @@ td.registration-message.code {
   padding: 10px;
 }
 
+
 .event-thumbnail {
   object-fit: cover;
   width: 120px;
   height: 120px;
   border: 1px solid #eeeeee;
   padding: 1px;
-  width: 200px;
 }
 
 .unregister {

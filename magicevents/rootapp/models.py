@@ -9,7 +9,7 @@ class Event(models.Model):
     title = models.CharField(max_length=100)
     start_date = models.DateField()
     end_date = models.DateField()
-    thumbnail = models.ImageField()
+    thumbnail = models.ImageField(upload_to="images/")
 
     class Meta:
         verbose_name = "Event"
