@@ -1,3 +1,4 @@
+/* all page stuff */
 body {
   margin: 1em auto 1em;
   max-width: 50em;
@@ -7,7 +8,6 @@ body {
   border-left: 1px solid;
   border-right: 1px solid;
 }
-
 h {
   line-height: 1.3;
 }
@@ -15,6 +15,8 @@ a {
   text-decoration: none;
   color: #205;
 }
+
+/* Welcome to Magic Events */
 h1.logo {
   background-color: #205;
   border-radius: 0.2em;
@@ -24,7 +26,7 @@ h1.logo {
   padding: 3px;
 }
 
-
+/* User greeting: "Hello, username!" */
 .greeting {
   height: 2em;
   border-bottom: 1px solid #220055;
@@ -37,16 +39,13 @@ h1.logo {
   margin-right: 0;
 }
 
-
+/* events table */
 table {
   width: 100%;
 }
 td.registration-message {
   text-align: center;
   color: #555555;
-}
-td.registration-message.code {
-
 }
 .unregister-code {
   font-size: 0.9em;
@@ -55,8 +54,6 @@ td.registration-message.code {
   color: #428a52;
   padding: 10px;
 }
-
-
 .event-thumbnail {
   object-fit: cover;
   width: 120px;
@@ -65,6 +62,7 @@ td.registration-message.code {
   padding: 1px;
 }
 
+/* unregistration messages */
 .unregister {
   font-size: 0.7em;
 }
