@@ -46,7 +46,7 @@ def event_register(request):
     user = request.user
 
     if not EventRegistration.already_registered(event, user):
-        # TODO: move the assignment of the unregistration code to models (?)
+        # TODO: move the assignment of the unregistration code to models.py
         #       ensure uniqueness of the code for the user
         unregister_code = randint(111111, 999999)
         event.add_atendee(user=user, code=unregister_code)
@@ -58,20 +58,6 @@ def event_register(request):
     return events(request)
 
 @login_required
-def event_unregister_old(request):
-    if request.method != 'POST': return redirect('start')
-
-    error_message = get_message_from_code(request.POST['code'], request.user)
-
-    if error_message != None:
-        messages.error(request, error_message, extra_tags='unregister')
-    else:
-        messages.success(request,
-                         'You have been succesfully unregistered.',
-                         extra_tags='unregister')
-    return start(request)
-
-@login_required
 def event_unregister(request):
     if request.method != 'POST': return redirect('start')
 
@@ -80,8 +66,8 @@ def event_unregister(request):
 
     try:
         Event.remove_atendee_from_code(user, code)
-    except ValidationError as e:
-        messages.error(request, e.message, extra_tags='unregister')
+    except ValidationError as error:
+        messages.error(request, error.message, extra_tags='unregister')
     else:
         messages.success(request,
                          'You have been successfully unregistered.',
