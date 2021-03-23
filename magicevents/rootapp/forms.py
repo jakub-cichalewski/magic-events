@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from django.contrib.auth.forms import UserCreationForm
@@ -18,10 +19,15 @@ class UnregisterCodeField(forms.CharField):
 
 # does this code really have to be an integer?
 class EventUnregisterForm(forms.Form):
-    unregister_code = forms.CharField(label='Registration Code', max_length=6)
+    unregister_code = forms.CharField(label='Registration Code',
+                                      max_length=6,
+                                      validators=[
+                                          RegexValidator(
+                                              r'^\d{6}$',
+                                               'Enter a six-digit code.')
+                                          ])
 
-    if unregister_code:
-        pass
+
 
     # 1. check if it is a digit, and a six-digit number
     # 2. check if it does match registrations
