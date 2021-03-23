@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
-
 from .forms import RegistrationForm, EventUnregisterForm
 from .models import EventRegistration, Event
 
