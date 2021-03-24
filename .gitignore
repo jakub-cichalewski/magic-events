@@ -1,5 +1,9 @@
 # source: https://github.com/github/gitignore/blob/master/Python.gitignore
 
+
+# Django media folder
+media/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
