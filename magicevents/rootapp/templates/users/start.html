@@ -30,10 +30,10 @@
 {% if user.is_authenticated and registrations %}
 <div>
   <h3>Unregister from an event:</h3>
+
   <form action="/events/unregister/" method="post" class="event-unregister">
     {% csrf_token %}
-    <label for="rcode">Registration Code:</label>
-    <input type="text" id="code" name="code">
+    {{form}}
     <button name="submit" type="submit">Unregister</button>
   </form>
 

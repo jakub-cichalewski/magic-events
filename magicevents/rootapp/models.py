@@ -7,7 +7,7 @@ from random import randint
 import datetime
 
 
-# QUESTION: where to put remove_atendee? it does not use self so...
+# QUESTION: where and how to put remove_atendee? it does not use self so...
 #           staticmethod? classmethod?
 
 class Event(models.Model):
