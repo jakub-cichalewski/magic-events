@@ -15,7 +15,8 @@ def register(request):
         return render(
             request, 'users/register.html',
             {'form': RegistrationForm}
-        )
+            )
+
     elif request.method == 'POST':
         form = RegistrationForm(request.POST)
 

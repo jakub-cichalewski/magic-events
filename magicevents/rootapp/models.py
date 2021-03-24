@@ -67,8 +67,8 @@ class EventRegistration(models.Model):
                               verbose_name='Event',
                               on_delete=models.CASCADE)
     user = models.ForeignKey(User,
-                            verbose_name='Attendee',
-                            on_delete=models.CASCADE)
+                             verbose_name='Attendee',
+                             on_delete=models.CASCADE)
 
     registration_code = models.PositiveIntegerField(
                                 default=randint(111111, 999999))
