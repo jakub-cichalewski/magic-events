@@ -1,6 +1,1 @@
-TODO: add api endpoints and serializers
-TODO: move unregister_code validation logic to django forms (at least partially)
-
---------------------------------------done--------------------------------------
-TODO: use django's messages
-FIXME: event thumbnails won't load - change media location, add css
+TODO: serialize and add api

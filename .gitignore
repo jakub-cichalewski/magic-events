@@ -1,5 +1,8 @@
 # source: https://github.com/github/gitignore/blob/master/Python.gitignore
 
+magicevents/media/images/*
+!magicevents/media/images/.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
