@@ -1,0 +1,5 @@
+#!/bin/bash
+# script to run when opening a new terminal in project's directory
+source env/bin/activate
+cd magicevents/
+python manage.py runserver
