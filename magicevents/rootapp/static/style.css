@@ -1,4 +1,4 @@
-/* all page stuff */
+/* Stuff applying to whole page */
 body {
   margin: 1em auto 1em;
   max-width: 50em;
@@ -39,7 +39,7 @@ h1.logo {
   margin-right: 0;
 }
 
-/* events table */
+/* Events table */
 table {
   width: 100%;
 }
@@ -62,7 +62,7 @@ td.registration-message {
   padding: 1px;
 }
 
-/* unregistration messages */
+/* Unregistration messages */
 .unregister {
   font-size: 0.7em;
 }
