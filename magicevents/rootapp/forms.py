@@ -14,9 +14,7 @@ class UnregisterCodeField(forms.CharField):
         super().validate(value)
 
 
-#TODO: Finish this form
-
-# does this code really have to be an integer?
+# QUESTION: does this code really have to be an integer?
 class EventUnregisterForm(forms.Form):
     unregister_code = forms.CharField(label='Unregistration Code',
                                       max_length=6,

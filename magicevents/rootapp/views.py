@@ -53,7 +53,7 @@ def event_register(request):
     user = request.user
 
     if not EventRegistration.already_registered(event, user):
-        # TODO: move the assignment of the unregistration code to models.py
+        # TODO: move the assignment of the unregistration code to models.py 
         #       ensure uniqueness of the code for the user
         unregister_code = randint(111111, 999999)
         event.add_atendee(user=user, code=unregister_code)
