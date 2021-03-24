@@ -33,7 +33,7 @@
 
   <form action="/events/unregister/" method="post" class="event-unregister">
     {% csrf_token %}
-    {{form}}
+    {{ form }}
     <button name="submit" type="submit">Unregister</button>
   </form>
 

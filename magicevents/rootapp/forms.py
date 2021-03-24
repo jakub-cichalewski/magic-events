@@ -9,11 +9,6 @@ class RegistrationForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields
 
 
-class UnregisterCodeField(forms.CharField):
-    def validate(self, value):
-        super().validate(value)
-
-
 # QUESTION: does this code really have to be an integer?
 class EventUnregisterForm(forms.Form):
     unregister_code = forms.CharField(label='Unregistration Code',
