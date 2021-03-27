@@ -4,8 +4,8 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 
-from .forms import RegistrationForm, EventUnregisterForm
-from .models import EventRegistration, Event
+from rootapp.forms import RegistrationForm, EventUnregisterForm
+from rootapp.models import EventRegistration, Event
 
 from random import randint
 
@@ -53,7 +53,7 @@ def event_register(request):
     user = request.user
 
     if not EventRegistration.already_registered(event, user):
-        # TODO: move the assignment of the unregistration code to models.py 
+        # TODO: move the assignment of the unregistration code to models.py
         #       ensure uniqueness of the code for the user
         unregister_code = randint(111111, 999999)
         event.add_atendee(user=user, code=unregister_code)
