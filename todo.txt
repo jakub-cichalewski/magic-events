@@ -1,1 +1,5 @@
 TODO: serialize and add api
+  TODO: make event-registrations visible only to user who is logged in
+        display only this user's registrations
+
+  
