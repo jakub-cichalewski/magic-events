@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+
+  <a href="/events">
+    <h3>Register for events...</h3>
+  </a>
+  <div>
+  {% if registrations %}
+
+    <h3>You are registered for following event(s):</h3>
+    <ul>
+      {% for registration in registrations%}
+        <li>{{ registration.event.title }}</li>
+      {% endfor %}
+    </ul>
+
+  {% else %}
+
+    As of now, you are not registered for any events.
+
+  {% endif %}
+  </div>
+
+{% endif %}
+
+{% if user.is_authenticated and registrations %}
+<div>
+  <h3>Unregister from an event:</h3>
+
+  <form action="/events/unregister/" method="post" class="event-unregister">
+    {% csrf_token %}
+    {{ form }}
+    <button name="submit" type="submit">Unregister</button>
+  </form>
+
+  {% if messages %}
+      {% for message in messages %}
+          <span class="{{ message.tags }}">{{ message }}</span>
+      {% endfor %}
+  {% endif %}
+</div>
+{% endif %}
+
+
+{% endblock %}

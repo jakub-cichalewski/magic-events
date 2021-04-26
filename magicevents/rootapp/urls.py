@@ -1,5 +1,5 @@
 from django.urls import path, include
-from django.conf.urls import url
+# from django.conf.urls import url
 
 from rootapp.views import start, register,\
  events, event_register, event_unregister

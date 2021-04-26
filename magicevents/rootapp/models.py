@@ -36,11 +36,13 @@ class Event(models.Model):
     def remove_atendee_from_code(user, code):
         try:
             registration = EventRegistration.objects.get(user=user,
-                                                         registration_code=code)
+                                                         registration_code=code
+                                                         )
         except MultipleObjectsReturned:
             raise ValidationError('Uncanny.')
         except ObjectDoesNotExist:
-            raise ValidationError('This code does not match any registrations.')
+            raise ValidationError('This code does not match any registrations.'
+                                  )
 
         event = registration.event
 
